@@ -1,0 +1,4 @@
+Set up collision
+    Have two object types: solid and non-solid 
+Create PhysicsObject that is affected by gravity
+Create proper prototype
