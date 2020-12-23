@@ -1,32 +1,14 @@
 
-class Box extends GameObject {
+class Box extends PhysicsObject {
     constructor(x=0, y=0, visible=true, layer=0) {
         super(x, y, visible, layer, "images/sample.png");
 
         this.horizontalSpeed = 1;
     }
 
-    tick = () => {
-        
-    }
-
-    keyHold(keyCode) {
-        if (keyCode === 39) {
-            this.xVel = this.horizontalSpeed;
-        }
-
-        if (keyCode === 37) {
-            this.xVel = -this.horizontalSpeed;
-        }
-    }
-
-    keyUp(keyCode) {
-        if (keyCode === 39) {
-            this.xVel = 0;
-        }
-
-        if (keyCode === 37) {
-            this.xVel = 0;
+    keyDown(keyCode) {
+        if (keyCode == 32) {
+            this.yVel = -7;
         }
     }
 }

@@ -10,7 +10,7 @@ class GameObject {
         this.visible = visible;
         this.layer = layer;
 
-        this.image = new Image(40, 40);
+        this.image = new Image(10, 10);
         this.image.src = src;
 
         this.pressedKeys = [];
@@ -22,7 +22,7 @@ class GameObject {
     // Draw the object to the screen
     draw = (context) => {
         if (this.visible) {
-            context.drawImage(this.image, this.x, this.y);
+            context.drawImage(this.image, this.x, this.y, 50, 50);
         }
     }
 
@@ -31,12 +31,12 @@ class GameObject {
 
     }
 
-    supertick = () => {
+    supertick() {
         this.pressedKeys.forEach(x => this.keyHold(x));
 
         this.x += this.xVel;
         this.y += this.yVel;
-        
+
         this.tick();
     }
 
@@ -67,6 +67,21 @@ class GameObject {
     // Called when key is released
     keyUp(keyCode) {
 
+    }
+}
+
+class PhysicsObject extends GameObject {
+    constructor(x=0, y=0, visible=true, layer=0, src=null, gravity=0.5) {
+        super(x, y, visible, layer, src);
+
+        this.gravity = 0.5;
+    }
+
+    supertick = () => {
+
+        super.supertick();
+
+        this.yVel += this.gravity;
     }
 }
 
