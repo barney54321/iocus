@@ -16,6 +16,8 @@ class GameObject {
         this.image = new Image(10, 10);
         this.image.src = src;
 
+        this.tag = "";
+
         this.pressedKeys = [];
 
         window.addEventListener("keydown", this.keyDownEvent);
@@ -80,6 +82,22 @@ class GameObject {
     // Updates the sprite's height
     setHeight(height) {
         this.height = height;
+    }
+
+    collision(otherObject) {
+
+    }
+
+    collisionCheck(otherObject) {
+        if (this.x < otherObject.x + otherObject.width &&
+            this.x + this.width > otherObject.x &&
+            this.y < otherObject.y + otherObject.height &&
+            this.y + this.height > otherObject.y &&
+            this != otherObject) {
+            
+                // collision detected!
+            this.collision(otherObject);
+        }
     }
 }
 
@@ -158,8 +176,16 @@ class Game {
     }
 
     update = () => {
+
         this.pressedKeys.forEach(x => this.keyHold(x));
         this.objects.forEach((obj) => obj.supertick());
+
+        // Collisions
+        for (var i = 0; i < this.objects.length; i++) {
+            for (var j = 0; j < this.objects.length; j++) {
+                this.objects[i].collisionCheck(this.objects[j]);
+            }
+        }
         this.tick();
         this.draw();
     }
