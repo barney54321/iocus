@@ -1,4 +1,3 @@
-
 class Box extends PhysicsObject {
     constructor(x=0, y=0, visible=true, layer=0) {
         super(x, y, visible, layer, "images/sample.png");
@@ -16,13 +15,13 @@ class Box extends PhysicsObject {
 class Manager extends Game {
     constructor(id, framerate=60) {
         super(id, framerate);
+
+        var box = new Box(10, 10, true, 10);
+
+        this.addObject(box);
     }
 }
 
 var game = new Manager("game", 30);
-
-var box = new Box(10, 10, true, 10);
-
-game.addObject(box);
 
 game.run();
