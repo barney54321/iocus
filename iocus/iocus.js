@@ -1,4 +1,3 @@
-
 class GameObject {
     constructor(x=0, y=0, visible=true, layer=0, src=null) {
         this.x = x;
@@ -122,6 +121,7 @@ class Game {
         this.context = this.canvas.getContext("2d");
         this.objects = [];
         this.framerate = framerate;
+        this.checkCollisions = true;
 
         this.pressedKeys = [];
 
@@ -175,17 +175,22 @@ class Game {
         this.objects.forEach((obj) => obj.draw(this.context));
     }
 
-    update = () => {
+    collisionCheck() {
+        if (this.checkCollisions) {
+            for (var i = 0; i < this.objects.length; i++) {
+                for (var j = 0; j < this.objects.length; j++) {
+                    this.objects[i].collisionCheck(this.objects[j]);
+                }
+            }
+        }
+    }
 
+    update = () => {
         this.pressedKeys.forEach(x => this.keyHold(x));
         this.objects.forEach((obj) => obj.supertick());
 
-        // Collisions
-        for (var i = 0; i < this.objects.length; i++) {
-            for (var j = 0; j < this.objects.length; j++) {
-                this.objects[i].collisionCheck(this.objects[j]);
-            }
-        }
+        this.collisionCheck();
+
         this.tick();
         this.draw();
     }
