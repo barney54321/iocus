@@ -4,6 +4,9 @@ class GameObject {
         this.x = x;
         this.y = y;
 
+        this.width = 10;
+        this.height = 10;
+
         this.xVel = 0;
         this.yVel = 0;
 
@@ -22,7 +25,7 @@ class GameObject {
     // Draw the object to the screen
     draw = (context) => {
         if (this.visible) {
-            context.drawImage(this.image, this.x, this.y, 50, 50);
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
     }
 
@@ -67,6 +70,16 @@ class GameObject {
     // Called when key is released
     keyUp(keyCode) {
 
+    }
+
+    // Updates the sprite's width
+    setWidth(width) {
+        this.width = width;
+    }
+
+    // Updates the sprite's height
+    setHeight(height) {
+        this.height = height;
     }
 }
 

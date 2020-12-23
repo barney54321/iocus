@@ -3,6 +3,9 @@ class Box extends PhysicsObject {
         super(x, y, visible, layer, "images/sample.png");
 
         this.horizontalSpeed = 1;
+
+        this.width = 60;
+        this.height = 60;
     }
 
     keyDown(keyCode) {
