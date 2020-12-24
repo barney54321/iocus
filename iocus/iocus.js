@@ -115,6 +115,30 @@ class PhysicsObject extends GameObject {
     }
 }
 
+// Represents "logic" objects (i.e. manager type objects)
+// Doesn't have collision or draw
+class EmptyObject extends GameObject {
+    constructor() {
+        super(0, 0, false, -1, "");
+
+        this.pressedKeys = [];
+
+        window.addEventListener("keydown", this.keyDownEvent);
+        window.addEventListener("keyup", this.keyUpEvent);
+    }
+
+    draw = (context) => {
+    }
+
+    supertick() {
+        this.pressedKeys.forEach(x => this.keyHold(x));
+        this.tick();
+    }
+
+    collisionCheck(otherObject) {
+    }
+}
+
 class Game {
     constructor(id, framerate=60) {
         this.canvas = document.getElementById(id);
