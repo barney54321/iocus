@@ -1,5 +1,5 @@
 class Bird extends PhysicsObject {
-    constructor(x=0, y=0, visible=true, layer=0) {
+    constructor(x = 0, y = 0, visible = true, layer = 0) {
         super(x, y, visible, layer, "images/bird.png");
 
         this.horizontalSpeed = 1;
@@ -21,7 +21,7 @@ class Pipe extends PhysicsObject {
         super(700, 150, true, 0, "images/pipe.png");
         this.gravity = 0;
 
-        this.y = Math.random() * 250 + 100
+        this.y = Math.random() * 250 + 100;
 
         this.xVel = -5;
 
@@ -44,7 +44,7 @@ class DownPipe extends PhysicsObject {
 }
 
 class Manager extends Game {
-    constructor(id, framerate=60) {
+    constructor(id, framerate = 60) {
         super(id, framerate);
 
         var box = new Bird(50, 10, true, 10);
@@ -56,31 +56,35 @@ class Manager extends Game {
         this.pipes = [];
     }
 
+    createPipe = () => {
+        // Create new pipe
+        var pipe = new Pipe();
+        var downPipe = new DownPipe(pipe);
+
+        this.addObject(pipe);
+        this.addObject(downPipe);
+
+        this.pipes.push(pipe);
+        this.pipes.push(downPipe);
+
+        // Remove pipe if off-screen
+        for (var i = this.pipes.length - 1; i >= 0; i--) {
+            if (this.pipes[i].x < -100) {
+                this.removeObject(this.pipes[i]);
+                this.pipes = this.pipes.filter((x) => x != this.pipes[i]);
+            }
+        }
+    };
+
     tick = () => {
         this.counter++;
 
         if (this.counter == this.timeBetweenPipes) {
             this.counter = 0;
 
-            // Create new pipe
-            var pipe = new Pipe();
-            var downPipe = new DownPipe(pipe);
-
-            this.addObject(pipe);
-            this.addObject(downPipe);
-
-            this.pipes.push(pipe);
-            this.pipes.push(downPipe);
-
-            // Remove pipe if off-screen
-            for (var i = this.pipes.length - 1; i >= 0; i--) {
-                if (this.pipes[i].x < -100) {
-                    this.removeObject(this.pipes[i]);
-                    this.pipes = this.pipes.filter(x => x != this.pipes[i]);
-                }
-            }
+            this.createPipe();
         }
-    }
+    };
 }
 
 var game = new Manager("game", 30);
