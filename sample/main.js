@@ -53,6 +53,7 @@ class Manager extends Game {
 
         this.counter = 0;
         this.timeBetweenPipes = 50;
+        this.pipes = [];
     }
 
     tick = () => {
@@ -67,6 +68,17 @@ class Manager extends Game {
 
             this.addObject(pipe);
             this.addObject(downPipe);
+
+            this.pipes.push(pipe);
+            this.pipes.push(downPipe);
+
+            // Remove pipe if off-screen
+            for (var i = this.pipes.length - 1; i >= 0; i--) {
+                if (this.pipes[i].x < -100) {
+                    this.removeObject(this.pipes[i]);
+                    this.pipes = this.pipes.filter(x => x != this.pipes[i]);
+                }
+            }
         }
     }
 }
